@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Naloga 1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h2>Registracija</h2>
+<form id="nalogaForm">
+    <label>Email: <input type="email" name="email" required></label><br><br>
+    <label>Ime: <input type="text" name="name" required></label><br><br>
+    <label>Država (dve črki): <input type="text" name="country" maxlength="2" required></label><br><br>
+    <label>Geslo: <input type="password" name="password" required></label><br><br>
+    <button type="submit">Pošlji</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+$(document).ready(function() {
+    $("#nalogaForm").on("submit", function(e) {
+        e.preventDefault();  
+
+        var formData = $(this).serialize(); 
+
+        $.ajax({
+            type: "POST",
+            url: "/naloga1",
+            data: formData,
+            success: function(response) {
+                $("#result").html('<p style="color:green;">' + response.message + '</p>');
+            },
+            error: function(xhr) {
+                var res = xhr.responseJSON;
+                $("#result").html('<p style="color:red;">' + res.message + '</p>');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
